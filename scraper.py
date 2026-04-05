@@ -1,5 +1,5 @@
 import os
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
@@ -13,15 +13,23 @@ HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/120.0.0.0 Safari/537.36"
-    )
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Referer": "https://www.basketball-reference.com/",
+    "Connection": "keep-alive",
 }
+
+SESSION = cloudscraper.create_scraper()
+SESSION.headers.update(HEADERS)
 
 
 def scrape_year(year: int) -> pd.DataFrame | None:
     url = f"https://www.basketball-reference.com/leagues/NBA_{year}_totals.html"
     try:
-        response = requests.get(url, headers=HEADERS, timeout=15)
+        response = SESSION.get(url, timeout=15)
         response.raise_for_status()
     except requests.RequestException as e:
         print(f"  ERROR fetching {year}: {e}")
