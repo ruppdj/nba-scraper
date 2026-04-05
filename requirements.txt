@@ -2,3 +2,8 @@ cloudscraper
 beautifulsoup4
 pandas
 lxml
+numpy
+matplotlib
+seaborn
+plotly
+jupyter
