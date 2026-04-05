@@ -1,4 +1,5 @@
 import os
+import requests
 import cloudscraper
 from bs4 import BeautifulSoup
 import pandas as pd
